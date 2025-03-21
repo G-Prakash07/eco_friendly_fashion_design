@@ -1,0 +1,30 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Shop - Fashion Design Eco-friendly
+    link(rel="stylesheet", href="/shop.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css")
+  body
+    include navbar.pug
+    
+    section.shop-hero
+      h1 Shop Sustainable Fashion
+      p Browse eco-friendly and upcycled fashion items
+
+    section.shop-items
+      h2 Featured Products
+      div.items-container
+        each item in results
+          div.item-card
+            img(src=item.image_url, alt=item.title)
+            h3= item.title
+            p.description= item.description
+            p.category Category: #{item.category}
+            p.condition Condition: #{item.condition}
+            p.price Price: £#{item.price}
+            a(href=`/shop/${item.item_id}`) View Details
+
+    footer
+      p © 2025 Fashion Design Eco-friendly | All rights reserved

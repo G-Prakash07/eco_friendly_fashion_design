@@ -27,6 +27,18 @@ app.get("/db_test", function(req, res) {
     });
 });
 
+app.get("/shop", function(req, res) {
+    const sql = "SELECT * FROM fashion_items";
+    db.query(sql).then(results => {
+        console.log(results);
+        res.render("shop", { results }); // Passing results to the Pug template
+    }).catch(error => {
+        console.error("Database error:", error);
+        res.status(500).send("Error fetching fashion items.");
+    });
+});
+
+
 // Create a route for /goodbye
 // Responds to a 'GET' request
 app.get("/goodbye", function(req, res) {
