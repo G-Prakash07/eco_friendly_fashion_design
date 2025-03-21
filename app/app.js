@@ -38,6 +38,22 @@ app.get("/shop", function(req, res) {
     });
 });
 
+app.get("/shop/:id", function(req, res) {
+    const itemId = req.params.id;
+    const sql = "SELECT * FROM fashion_items WHERE item_id = ?";
+    
+    db.query(sql, [itemId]).then(results => {
+        if (results.length > 0) {
+            res.render("shop_details", { item: results[0] });
+        } else {
+            res.status(404).send("Item not found.");
+        }
+    }).catch(error => {
+        console.error("Database error:", error);
+        res.status(500).send("Error fetching item details.");
+    });
+});
+
 
 // Create a route for /goodbye
 // Responds to a 'GET' request
