@@ -1,0 +1,86 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  /* Contact Hero Section */
+  .contact-hero {
+    background-color: #1abc9c;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+  }
+  
+  .contact-hero h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .contact-hero p {
+    font-size: 18px;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+  
+  /* Contact Form */
+  .contact-form {
+    padding: 40px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contact-form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .contact-form label {
+    display: block;
+    font-size: 16px;
+    color: #2c3e50;
+    margin-bottom: 8px;
+  }
+  
+  .contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .contact-form button {
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .contact-form button:hover {
+    background-color: #16a085;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #34495e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    margin-top: 50px;
+  }
+  

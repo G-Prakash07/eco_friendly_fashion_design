@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Mar 21, 2025 at 02:54 AM
+-- Generation Time: Mar 21, 2025 at 01:00 PM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.8
 
@@ -94,16 +94,11 @@ CREATE TABLE `fashion_items` (
 --
 
 INSERT INTO `fashion_items` (`item_id`, `user_id`, `title`, `description`, `category`, `condition`, `price`, `image_url`, `created_at`) VALUES
-(1, 1, 'Vintage Blue Shirt', 'A stylish and eco-friendly shirt made from organic cotton.', 'Shirt', 'used', 499.99, 'url_to_image_1.jpg', '2025-03-21 02:54:15'),
-(2, 2, 'Handmade Leather Bag', 'A premium quality upcycled leather bag with a unique design.', 'Bag', 'upcycled', 1499.99, 'url_to_image_2.jpg', '2025-03-21 02:54:15'),
-(3, 3, 'Eco-friendly Sneakers', 'Comfortable sneakers made from recycled materials.', 'Shoes', 'new', 899.99, 'url_to_image_3.jpg', '2025-03-21 02:54:15'),
-(4, 4, 'Recycled Denim Jacket', 'A trendy denim jacket made from recycled fabric.', 'Jacket', 'used', 799.99, 'url_to_image_4.jpg', '2025-03-21 02:54:15'),
-(5, 5, 'Upcycled Wool Scarf', 'A warm scarf made from upcycled wool.', 'Scarf', 'upcycled', 299.99, 'url_to_image_5.jpg', '2025-03-21 02:54:15'),
-(6, 1, 'Vintage Blue Shirt', 'A stylish and eco-friendly shirt made from organic cotton.', 'Shirt', 'used', 499.99, 'url_to_image_1.jpg', '2025-03-21 02:54:24'),
-(7, 2, 'Handmade Leather Bag', 'A premium quality upcycled leather bag with a unique design.', 'Bag', 'upcycled', 1499.99, 'url_to_image_2.jpg', '2025-03-21 02:54:24'),
-(8, 3, 'Eco-friendly Sneakers', 'Comfortable sneakers made from recycled materials.', 'Shoes', 'new', 899.99, 'url_to_image_3.jpg', '2025-03-21 02:54:24'),
-(9, 4, 'Recycled Denim Jacket', 'A trendy denim jacket made from recycled fabric.', 'Jacket', 'used', 799.99, 'url_to_image_4.jpg', '2025-03-21 02:54:24'),
-(10, 5, 'Upcycled Wool Scarf', 'A warm scarf made from upcycled wool.', 'Scarf', 'upcycled', 299.99, 'url_to_image_5.jpg', '2025-03-21 02:54:24');
+(1, 1, 'Vintage Blue Shirt', 'A stylish and eco-friendly shirt made from organic cotton.', 'Shirt', 'used', 49.99, 'Vintage_Blue_Shirt.jpg', '2025-03-21 02:54:15'),
+(2, 2, 'Handmade Leather Bag', 'A premium quality upcycled leather bag with a unique design.', 'Bag', 'upcycled', 149.99, 'Handmade_Leather_Bag.avif', '2025-03-21 02:54:15'),
+(3, 3, 'Eco-friendly Sneakers', 'Comfortable sneakers made from recycled materials.', 'Shoes', 'new', 89.99, 'opumo-cariuma-2.avif', '2025-03-21 02:54:15'),
+(4, 4, 'Recycled Denim Jacket', 'A trendy denim jacket made from recycled fabric.', 'Jacket', 'used', 79.99, 'w2000_q60.avif', '2025-03-21 02:54:15'),
+(5, 5, 'Upcycled Wool Scarf', 'A warm scarf made from upcycled wool.', 'Scarf', 'upcycled', 9.99, 'wool_Scarf.webp', '2025-03-21 02:54:15');
 
 -- --------------------------------------------------------
 
