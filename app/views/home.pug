@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Home - Fashion Design Eco-friendly
+    link(rel="stylesheet", href="/home.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css")
+  body
+    include navbar.pug
+    
+    section.hero
+      h1 Welcome to Fashion Design Eco-friendly
+      p Make smarter, more eco-friendly choices in fashion
+      a(href="/shop") Shop Now
+      a(href="/donate") Donate Your Clothes
+    
+    section.features
+      h2 Our Features
+      div.features-container
+        div.feature
+          i.fas.fa-leaf.fa-4x
+          h3 Sustainable Shopping
+          p Find eco-friendly and stylish clothes from brands that care about the planet.
+        div.feature
+          i.fas.fa-recycle.fa-4x
+          h3 Pre-Owned Clothes
+          p Give pre-loved clothes a new life and save the environment—affordable and stylish.
+        div.feature
+          i.fas.fa-donate.fa-4x
+          h3 Donate & Upcycle
+          p Donate your old clothes and support sustainable fashion. Upcycled pieces are unique and creative.
+    
+    footer
+      p © 2025 Fashion Design Eco-friendly | All rights reserved
