@@ -27,15 +27,40 @@ app.get("/db_test", function(req, res) {
     });
 });
 
+// API endpoint to fetch fashion items with filters
 app.get("/shop", function(req, res) {
-    const sql = "SELECT * FROM fashion_items";
-    db.query(sql).then(results => {
-        console.log(results);
-        res.render("shop", { results }); // Passing results to the Pug template
-    }).catch(error => {
-        console.error("Database error:", error);
-        res.status(500).send("Error fetching fashion items.");
-    });
+    // Extract query parameters for filtering
+    const minPrice = req.query.minPrice || 0;  // Default to 0 if not provided
+    const maxPrice = req.query.maxPrice || 99999;  // Default to a high value if not provided
+    const category = req.query.category || null;  // Category filter (if any)
+    const condition = req.query.condition || null;  // Condition filter (if any)
+
+    // Base SQL query
+    let sql = "SELECT * FROM fashion_items WHERE price BETWEEN ? AND ?";
+    let params = [minPrice, maxPrice];
+
+    // Add category filter if provided
+    if (category) {
+        sql += " AND category = ?";
+        params.push(category);
+    }
+
+    // Add condition filter if provided
+    if (condition) {
+        sql += " AND `condition` = ?";  // Escape 'condition' with backticks
+        params.push(condition);
+    }
+
+    // Execute the query with the parameters
+    db.query(sql, params)
+        .then(results => {
+            // Render the results to the 'shop' template
+            res.render("shop", { results });
+        })
+        .catch(error => {
+            console.error("Database error:", error);
+            res.status(500).send("Error fetching fashion items.");
+        });
 });
 
 app.get("/shop/:id", function(req, res) {

@@ -117,3 +117,76 @@ footer {
     font-size: 14px;
     margin-top: 50px;
 }
+/* Filter Section */
+.shop-filters {
+    background-color: #f8f8f8;
+    padding: 20px 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shop-filters form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .shop-filters select,
+  .shop-filters button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .shop-filters select:focus,
+  .shop-filters button:focus {
+    outline: none;
+    border-color: #1abc9c;
+  }
+  
+  .shop-filters select {
+    width: 200px;
+  }
+  
+  .shop-filters button {
+    background-color: #1abc9c;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .shop-filters button:hover {
+    background-color: #16a085;
+  }
+  
+  .shop-filters button:focus {
+    outline: none;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .shop-filters form {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .shop-filters select {
+      width: 100%;
+      max-width: 300px;
+    }
+  
+    .shop-filters button {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+  

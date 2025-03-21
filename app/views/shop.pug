@@ -13,6 +13,27 @@ html(lang="en")
       h1 Shop Sustainable Fashion
       p Browse eco-friendly and upcycled fashion items
 
+    section.shop-filters
+      form(method="GET", action="/shop")
+        select(name="category")
+          option(value="") All Categories
+          option(value="Shirt") Shirt
+          option(value="Bag") Bag
+          option(value="Shoes") Shoes
+          option(value="Jacket") Jacket
+          option(value="Scarf") Scarf
+
+        select(name="condition")
+          option(value="") All Conditions
+          option(value="new") New
+          option(value="used") Used
+          option(value="upcycled") Upcycled
+
+        //- input(type="number", name="min_price", placeholder="Min Price" min="0")
+        //- input(type="number", name="max_price", placeholder="Max Price" min="0")
+
+        button(type="submit") Apply Filters
+
     section.shop-items
       h2 Featured Products
       div.items-container
