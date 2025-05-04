@@ -1,0 +1,45 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Authentication - Login & Register
+    link(rel="stylesheet", href="/auth.css")
+  body
+    main.auth-container
+      h1 Welcome to Fashion Eco Portal
+
+      .forms-wrapper
+        // Login Form
+        .auth-box
+          h2 Login
+          form(method="POST", action="/authenticate")
+            label(for="email") Email:
+            input(type="email", name="email", required)
+            label(for="password") Password:
+            input(type="password", name="password", required)
+            button(type="submit") Login
+
+        // Registration Form
+        .auth-box
+          h2 Register
+          form(method="POST", action="/register")
+            label(for="email") Email:
+            input(type="email", name="email", required)
+
+            label(for="password") Password:
+            input(type="password", name="password", required)
+
+            label(for="username") Username:
+            input(type="text", name="username", required)
+
+            label(for="name") Full Name:
+            input(type="text", name="name", required)
+
+            label(for="address") Address:
+            textarea(name="address", rows="3", required)
+
+            label(for="contact") Contact:
+            input(type="tel", name="contact", required)
+
+            button(type="submit") Register
