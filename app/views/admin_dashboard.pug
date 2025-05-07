@@ -1,0 +1,69 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Admin Dashboard – Fashion Design Eco-friendly
+    link(rel="stylesheet", href="/navbar.css")
+    link(rel="stylesheet", href="/admin_dashboard.css")
+  body
+    include navbar.pug
+
+    // Hero
+    section.dashboard-hero
+      .container
+        h1 Admin Dashboard
+        p Welcome back, Admin! Here you can manage users and view donations.
+
+    // Users table
+    section.admin-section
+      .container
+        h2 Registered Users
+        if users.length
+          table.admin-table
+            thead
+              tr
+                th ID
+                th Email
+                th Username
+                th Name
+                th Admin?
+            tbody
+              each u in users
+                tr
+                  td= u.user_id
+                  td= u.email
+                  td= u.username || '—'
+                  td= u.name || '—'
+                  td= u.is_admin ? '✔️' : '—'
+        else
+          p No users found.
+
+    // Donations table
+    section.admin-section
+      .container
+        h2 All Donations
+        if donations.length
+          table.admin-table
+            thead
+              tr
+                th Donation ID
+                th User ID
+                th Item ID
+                th Quantity
+                th Status
+                th Date
+            tbody
+              each d in donations
+                tr
+                  td= d.donation_id
+                  td= d.user_id
+                  td= d.item_id
+                  td= d.quantity
+                  td= d.status
+                  td= d.created_at
+        else
+          p No donations found.
+
+    footer
+      p © 2025 Fashion Design Eco-friendly | All rights reserved
