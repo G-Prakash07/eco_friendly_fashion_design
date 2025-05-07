@@ -278,7 +278,34 @@ app.get("/hello/:name", function(req, res) {
     //  Retrieve the 'name' parameter and use it in a dynamically generated page
     res.send("Hello " + req.params.name);
 });
-
+// Show the logged-in user’s donations
+app.get('/donations', async (req, res) => {
+    // require login
+    if (!req.session.uid) {
+      return res.redirect('/login');
+    }
+  
+    try {
+      // fetch this user’s donations, joining to get item titles
+      const sql = `
+        SELECT d.donation_id,
+               i.title,
+               d.quantity,
+               d.status,
+               DATE_FORMAT(d.created_at, '%Y-%m-%d') AS date
+        FROM donations d
+        JOIN fashion_items i ON d.item_id = i.item_id
+        WHERE d.user_id = ?
+        ORDER BY d.created_at DESC
+      `;
+      const donations = await db.query(sql, [req.session.uid]);
+      res.render('donations', { donations });
+    } catch (err) {
+      console.error("Error loading donations:", err);
+      res.status(500).send("Could not load your donations.");
+    }
+  });
+  
 // Start server on port 3000
 app.listen(3000,function(){
     console.log(`Server running at http://127.0.0.1:3000/`);

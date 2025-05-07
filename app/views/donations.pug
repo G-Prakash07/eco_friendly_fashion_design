@@ -1,0 +1,34 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title My Donations - Fashion Design Eco-friendly
+    link(rel="stylesheet", href="/donations.css")
+  body
+    include navbar.pug
+
+    section.donations-hero
+      .container
+        h1 My Donations
+        if donations.length
+          table.donations-table
+            thead
+              tr
+                th Item
+                th Quantity
+                th Status
+                th Date
+            tbody
+              each d in donations
+                tr
+                  td= d.title
+                  td= d.quantity
+                  td= d.status
+                  td= d.date
+        else
+          p You haven’t made any donations yet. 
+          a(href="/donate") Donate your first item
+
+    footer
+      p © 2025 Fashion Design Eco-friendly | All rights reserved
