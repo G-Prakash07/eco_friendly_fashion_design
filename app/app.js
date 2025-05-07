@@ -305,7 +305,101 @@ app.get('/donations', async (req, res) => {
       res.status(500).send("Could not load your donations.");
     }
   });
+
+  /**
+ * Middleware: require an admin session
+ */
+function requireAdmin(req, res, next) {
+    if (!req.session.loggedIn || !req.session.isAdmin) {
+      return res.redirect('/admin_login');
+    }
+    next();
+  }
   
+  /**
+   * GET /admin_login
+   * Render the admin login form.
+   */
+  app.get('/admin_login', (req, res) => {
+    // If already logged in as admin, send them straight to dashboard
+    if (req.session.loggedIn && req.session.isAdmin) {
+      return res.redirect('/admin_dashboard');
+    }
+    res.render('admin_login');
+  });
+  
+  /**
+   * POST /admin_login
+   * Authenticate admin credentials.
+   */
+  app.post('/admin_login', async (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).send('Email and password are required.');
+    }
+  
+    try {
+      // Lookup user by email
+      const user = new User(email);
+      const uId  = await user.getIdFromEmail();
+      if (!uId) {
+        return res.status(401).send('Invalid credentials.');
+      }
+  
+      // Verify password
+      const match = await user.authenticate(password);
+      if (!match) {
+        return res.status(401).send('Invalid credentials.');
+      }
+  
+      // Fetch is_admin flag directly
+      const rows    = await db.query(
+        'SELECT is_admin FROM Users WHERE id = ?', 
+        [uId]
+      );
+      const isAdmin = rows.length > 0 && rows[0].is_admin === 1;
+      if (!isAdmin) {
+        return res.status(403).send('Access denied.');
+      }
+  
+      // Success: set session and redirect
+      req.session.uid      = uId;
+      req.session.loggedIn = true;
+      req.session.isAdmin  = true;
+  
+      res.redirect('/admin_dashboard');
+    } catch (err) {
+      console.error('Admin login error:', err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+  /**
+   * GET /admin_dashboard
+   * Show the admin dashboard (protected).
+   */
+  app.get('/admin_dashboard', requireAdmin, async (req, res) => {
+    try {
+      // Load users and donations for the dashboard
+      const users = await db.query(`
+        SELECT id AS user_id, email, username, name, is_admin
+        FROM Users
+        ORDER BY id
+      `);
+  
+      const donations = await db.query(`
+        SELECT d.donation_id, d.user_id, d.item_id, d.quantity, d.status,
+               DATE_FORMAT(d.created_at, '%Y-%m-%d') AS created_at
+        FROM donations d
+        ORDER BY d.created_at DESC
+      `);
+  
+      res.render('admin_dashboard', { users, donations });
+    } catch (err) {
+      console.error('Dashboard loading error:', err);
+      res.status(500).send('Could not load admin dashboard.');
+    }
+  });
 // Start server on port 3000
 app.listen(3000,function(){
     console.log(`Server running at http://127.0.0.1:3000/`);

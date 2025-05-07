@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Admin Login – Fashion Design Eco-friendly
+    link(rel="stylesheet", href="/navbar.css")
+    link(rel="stylesheet", href="/auth.css")
+  body
+    main.auth-container
+      h1 Admin Login
+
+      .forms-wrapper
+        .auth-box
+          form(method="POST", action="/admin_login")
+            label(for="email") Email:
+            input(type="email", name="email", id="email", required)
+            label(for="password") Password:
+            input(type="password", name="password", id="password", required)
+            button(type="submit") Login
+
+    footer
+      p © 2025 Fashion Design Eco-friendly | All rights reserved
