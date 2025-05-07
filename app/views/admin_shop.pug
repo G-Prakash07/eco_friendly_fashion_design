@@ -30,7 +30,8 @@ html(lang="en")
                   td= itm.title
                   td= itm.category
                   td= itm.condition
-                  td ₹#{itm.price.toFixed(2)}
+                  // convert price string to Number before formatting
+                  td= '£' + Number(itm.price).toFixed(2)
         else
           p No items found.
 

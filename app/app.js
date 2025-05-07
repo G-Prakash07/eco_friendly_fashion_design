@@ -39,6 +39,32 @@ const sessionMiddleware = session({
     resave: false
 });
 app.use(sessionMiddleware);
+const multer  = require('multer');
+const path    = require('path');
+
+// 1) Configure storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, 'static', 'uploads')); 
+    // make sure `static/uploads` exists (mkdir -p static/uploads)
+  },
+  filename: (req, file, cb) => {
+    // e.g. item-<timestamp>.<ext>
+    const ext = path.extname(file.originalname);
+    const name = 'item-' + Date.now() + ext;
+    cb(null, name);
+  }
+});
+
+// 2) File filter (only images)
+const fileFilter = (req, file, cb) => {
+  const allowed = /jpeg|jpg|png|gif/;
+  const ok = allowed.test(file.mimetype);
+  cb(ok ? null : new Error('Invalid file type'), ok);
+};
+
+// 3) Multer upload instance
+const upload = multer({ storage, fileFilter, limits: { fileSize: 2*1024*1024 } }); // 2MB max
 
 app.use((req, res, next) => {
     res.locals.currentPath = req.path;
@@ -412,6 +438,79 @@ function requireAdmin(req, res, next) {
       res.status(500).send('Could not load items.');
     }
   });
+
+  // show form (no change)
+app.get('/admin_create', requireAdmin, (req, res) => {
+    res.render('admin_create', { item: {} });
+  });
+  
+  // handle create + upload one image file
+  app.post(
+    '/admin_create',
+    requireAdmin,
+    upload.single('image_file'),        // <— Multer middleware
+    async (req, res) => {
+      try {
+        const { title, description, category, condition, price } = req.body;
+        // multer saved file under req.file.filename
+        const image_url = req.file ? 'uploads/' + req.file.filename : null;
+  
+        await db.query(
+          `INSERT INTO fashion_items
+           (title, description, category, \`condition\`, price, image_url)
+           VALUES (?, ?, ?, ?, ?, ?)`,
+          [title, description, category, condition, price, image_url]
+        );
+        res.redirect('/admin_shop');
+      } catch (err) {
+        console.error('Error creating item:', err);
+        res.status(500).send('Could not create item.');
+      }
+    }
+  );
+
+  // show edit form
+app.get('/admin_shop/:id/edit', requireAdmin, async (req, res) => {
+    const [item] = await db.query('SELECT * FROM fashion_items WHERE item_id = ?', [req.params.id]);
+    if (!item) return res.status(404).send('Not found');
+    res.render('admin_create', { item, isEdit: true });
+  });
+  
+  // handle update + optional new image
+  app.post(
+    '/admin_shop/:id/edit',
+    requireAdmin,
+    upload.single('image_file'),
+    async (req, res) => {
+      try {
+        const { title, description, category, condition, price } = req.body;
+        let image_url = req.body.current_image; 
+        if (req.file) {
+          image_url = 'uploads/' + req.file.filename;
+        }
+        await db.query(
+          `UPDATE fashion_items
+           SET title=?, description=?, category=?, \`condition\`=?, price=?, image_url=?
+           WHERE item_id=?`,
+          [title, description, category, condition, price, image_url, req.params.id]
+        );
+        res.redirect('/admin_shop');
+      } catch (err) {
+        console.error('Error updating item:', err);
+        res.status(500).send('Could not update item.');
+      }
+    }
+  );
+  app.post('/admin_shop/:id/delete', requireAdmin, async (req, res) => {
+    try {
+      await db.query('DELETE FROM fashion_items WHERE item_id = ?', [req.params.id]);
+      res.redirect('/admin_shop');
+    } catch (err) {
+      console.error('Error deleting item:', err);
+      res.status(500).send('Could not delete item.');
+    }
+  });
+  
 // Start server on port 3000
 app.listen(3000,function(){
     console.log(`Server running at http://127.0.0.1:3000/`);
