@@ -8,13 +8,22 @@ html(lang="en")
   body
     nav
       ul
-        li
-          a(href="/") Home
-        li
-          a(href="/shop") Shop
-        li
-          a(href="/donate") Donate
-        li
-          a(href="/about") About Us
-        li
-          a(href="/contact") Contact
+        if !loggedIn
+          li(class=(currentPath=='/' ? 'active' : ''))
+            a(href="/") Home
+          li(class=(currentPath=='/donate' ? 'active' : ''))
+            a(href="/donate") Donate
+          li(class=(currentPath=='/about' ? 'active' : ''))
+            a(href="/about") About Us
+          li(class=(currentPath=='/contact' ? 'active' : ''))
+            a(href="/contact") Contact
+
+          //– auth links
+        
+          li(class=(currentPath=='/login' ? 'active' : ''))
+            a(href="/login") Login
+        else
+          li(class=(currentPath=='/shop' ? 'active' : ''))
+            a(href="/shop") Dashboard
+          li
+            a(href="/logout") Logout

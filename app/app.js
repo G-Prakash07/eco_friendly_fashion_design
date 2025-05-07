@@ -40,15 +40,19 @@ const sessionMiddleware = session({
 });
 app.use(sessionMiddleware);
 
+app.use((req, res, next) => {
+    res.locals.currentPath = req.path;
+    res.locals.loggedIn   = !!req.session.loggedIn;
+    next();
+  });
+
 
 
 app.get('/login', function (req, res) {
-    res.render('login');
+    res.render('authentication');
 });
 
-app.get('/register', function (req, res) {
-    res.render('register');
-});
+
 // Create a route for root - /
 app.get("/", function(req, res) {
     res.render("home");
@@ -152,7 +156,7 @@ app.post('/authenticate', async function (req, res) {
         req.session.uid = uId;
         req.session.loggedIn = true;
         console.log(req.session.id);
-        res.redirect('/admin_dashboard');
+        res.redirect('/shop');
     } catch (err) {
         console.error(`Error while authenticating user:`, err.message);
         res.status(500).send('Internal Server Error');
@@ -171,6 +175,29 @@ app.get("/login", function (req, res) {
         res.status(500).send('Internal Server Error');
     }
 });
+
+// Registration handler
+app.post('/register', async (req, res) => {
+    const { email, password, username, name, address, contact } = req.body;
+    if (!email || !password || !username || !name || !address || !contact) {
+      return res.status(400).send('All fields are required.');
+    }
+  
+    const user = new User(email, username, name, address, contact);
+    try {
+      if (await user.getIdFromEmail()) {
+        return res.status(409).send('Email already registered.');
+      }
+      await user.addUser(password);
+      req.session.uid = user.id;
+      req.session.loggedIn = true;
+      res.redirect('/');
+    } catch (err) {
+      console.error('Registration error:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+  });
+  
 
 
 app.post('/set-password', async function (req, res) {
@@ -193,6 +220,12 @@ app.post('/set-password', async function (req, res) {
         console.error(`Error while adding password `, err.message);
     }
 });
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+      res.redirect('/');
+    });
+  });
 
 // Create a dynamic route for /hello/<name>, where name is any value provided by user
 // At the end of the URL
