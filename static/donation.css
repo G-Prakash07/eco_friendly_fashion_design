@@ -1,0 +1,108 @@
+
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Page background */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  /* Hero section */
+  .donate-hero {
+    background-color: #1abc9c;
+    color: #fff;
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .donate-hero .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .donate-hero h1 {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+  .donate-hero p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  /* Donate form */
+  .donate-form {
+    padding: 40px 20px;
+  }
+  .donate-form .container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 30px 20px;
+  }
+  .donate-form .form-group {
+    margin-bottom: 20px;
+  }
+  .donate-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2c3e50;
+  }
+  .donate-form input,
+  .donate-form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+  }
+  .donate-form input:focus,
+  .donate-form select:focus {
+    outline: none;
+    border-color: #1abc9c;
+    box-shadow: 0 0 4px rgba(26,188,156,0.3);
+  }
+  
+  /* Buttons */
+  .donate-form button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #1abc9c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+  }
+  .donate-form button:hover {
+    background-color: #159a82;
+    transform: translateY(-2px);
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #34495e;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    margin-top: 40px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .donate-form .container {
+      padding: 20px 15px;
+    }
+  }
+  

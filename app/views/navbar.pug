@@ -17,13 +17,21 @@ html(lang="en")
             a(href="/about") About Us
           li(class=(currentPath=='/contact' ? 'active' : ''))
             a(href="/contact") Contact
-
-          //– auth links
-        
           li(class=(currentPath=='/login' ? 'active' : ''))
             a(href="/login") Login
         else
+          // logged-in nav
+          li(class=(currentPath=='/' ? 'active' : ''))
+            a(href="/") Home
           li(class=(currentPath=='/shop' ? 'active' : ''))
-            a(href="/shop") Dashboard
-          li
+            a(href="/shop") Shop
+          li(class=(currentPath=='/donate' ? 'active' : ''))
+            a(href="/donate") Donate
+          li(class=(currentPath=='/donations' ? 'active' : ''))
+            a(href="/donations") My Donations
+          li(class=(currentPath=='/about' ? 'active' : ''))
+            a(href="/about") About Us
+          li(class=(currentPath=='/contact' ? 'active' : ''))
+            a(href="/contact") Contact
+          li(class=(currentPath=='/logout' ? 'active' : ''))
             a(href="/logout") Logout

@@ -221,6 +221,47 @@ app.post('/set-password', async function (req, res) {
     }
 });
 
+// Show the donate form
+app.get('/donate', async (req, res) => {
+    try {
+      // pull available items to populate the dropdown
+      const items = await db.query("SELECT item_id, title, `condition` FROM fashion_items");
+      res.render('donate', { items });
+    } catch (err) {
+      console.error("Error loading donate page:", err);
+      res.status(500).send("Error loading donation form.");
+    }
+  });
+  
+  // Handle donation submissions
+  app.post('/donate', async (req, res) => {
+    try {
+      const { name, email, item_id, quantity } = req.body;
+      // if you track users by session:
+      const user_id = req.session.uid || null;
+  
+      // Basic validation
+      if ((!user_id && (!name || !email)) || !item_id || !quantity) {
+        return res.status(400).send("All fields are required.");
+      }
+  
+      // If you want to record name/email for anonymous donors,
+      // you could have expanded the donations table or log them elsewhere.
+      // Here we'll just tie to the user if logged in.
+      const sql = `
+        INSERT INTO donations (user_id, item_id, quantity)
+        VALUES (?, ?, ?)
+      `;
+      await db.query(sql, [user_id, item_id, quantity]);
+  
+      res.send("Thanks for donating! We'll be in touch about pickup.");
+    } catch (err) {
+      console.error("Error processing donation:", err);
+      res.status(500).send("Could not process your donation.");
+    }
+  });
+  
+
 app.get('/logout', (req, res) => {
     req.session.destroy(() => {
       res.redirect('/');
