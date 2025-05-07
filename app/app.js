@@ -400,6 +400,18 @@ function requireAdmin(req, res, next) {
       res.status(500).send('Could not load admin dashboard.');
     }
   });
+
+  app.get('/admin_shop', requireAdmin, async (req, res) => {
+    try {
+      const items = await db.query(
+        'SELECT * FROM fashion_items ORDER BY created_at DESC'
+      );
+      res.render('admin_shop', { items });
+    } catch (err) {
+      console.error('Error loading admin shop:', err);
+      res.status(500).send('Could not load items.');
+    }
+  });
 // Start server on port 3000
 app.listen(3000,function(){
     console.log(`Server running at http://127.0.0.1:3000/`);

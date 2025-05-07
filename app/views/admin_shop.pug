@@ -1,0 +1,38 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Admin Shop – Manage Items
+    link(rel="stylesheet", href="/navbar.css")
+    link(rel="stylesheet", href="/admin_shop.css")
+  body
+    include navbar.pug
+
+    section.admin-section
+      .container
+        h1 Admin Shop
+        a.button-new(href="/admin_create") + New Item
+
+        if items.length
+          table.admin-table
+            thead
+              tr
+                th ID
+                th Title
+                th Category
+                th Condition
+                th Price
+            tbody
+              each itm in items
+                tr
+                  td= itm.item_id
+                  td= itm.title
+                  td= itm.category
+                  td= itm.condition
+                  td ₹#{itm.price.toFixed(2)}
+        else
+          p No items found.
+
+    footer
+      p © 2025 Fashion Design Eco-friendly | All rights reserved
