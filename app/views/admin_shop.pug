@@ -23,6 +23,7 @@ html(lang="en")
                 th Category
                 th Condition
                 th Price
+                th Actions
             tbody
               each itm in items
                 tr
@@ -30,8 +31,13 @@ html(lang="en")
                   td= itm.title
                   td= itm.category
                   td= itm.condition
-                  // convert price string to Number before formatting
                   td= '£' + Number(itm.price).toFixed(2)
+                  td
+                    // Edit link
+                    a.button-edit(href=`/admin_shop/${itm.item_id}/edit`) Edit
+                    // Delete form
+                    form.inline(method="POST", action=`/admin_shop/${itm.item_id}/delete`)
+                      button.button-delete(type="submit") Delete
         else
           p No items found.
 
