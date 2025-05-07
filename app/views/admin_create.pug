@@ -1,0 +1,47 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Create Item – Admin Shop
+    link(rel="stylesheet", href="/navbar.css")
+    link(rel="stylesheet", href="/admin_create.css")
+  body
+    include navbar.pug
+
+    section.admin-section
+      .container
+        h1 Create New Item
+
+        form(method="POST", action="/admin_create", enctype="multipart/form-data")
+          // Title
+          label(for="title") Title
+          input#title(type="text", name="title", value=item.title || '', required)
+
+          // Description
+          label(for="description") Description
+          textarea#description(name="description", rows="4")= item.description || ''
+
+          // Category
+          label(for="category") Category
+          input#category(type="text", name="category", value=item.category || '')
+
+          // Condition
+          label(for="condition") Condition
+          select#condition(name="condition", required)
+            each opt in ['new','used','upcycled']
+              option(value=opt selected=(item.condition===opt))= opt.charAt(0).toUpperCase() + opt.slice(1)
+
+          // Price
+          label(for="price") Price (£)
+          input#price(type="number", name="price", step="0.01", value=item.price || 0, required)
+
+          // Image Upload
+          label(for="image_file") Upload Image
+          input#image_file(type="file", name="image_file", accept="image/*")
+          
+          // Submit
+          button(type="submit") Create Item
+
+    footer
+      p © 2025 Fashion Design Eco-friendly | All rights reserved
